@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcia Produtos Naturais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --verde-erva: #7CB342;
+            --marrom-canela: #A1887F;
+            --creme-vegetal: #FFF8E1;
+            --bege-amendoa: #D7CCC8;
+            --verde-whatsapp: #25D366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--creme-vegetal) 0%, var(--bege-amendoa) 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--verde-erva);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(124, 179, 66, 0.3);
+        }
+
+        .header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--verde-whatsapp);
+            color: white;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float i {
+            font-size: 1.3rem;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--verde-erva);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--marrom-canela);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 179, 66, 0.2);
+            border-color: var(--verde-erva);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: var(--creme-vegetal);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bege-amendoa);
+        }
+
+        .product-image i {
+            font-size: 3rem;
+            color: var(--marrom-canela);
+            opacity: 0.7;
+        }
+
+        .product-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--verde-erva);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--marrom-canela);
+            margin-bottom: 1rem;
+        }
+
+        .product-button {
+            width: 100%;
+            background: var(--verde-whatsapp);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .product-button:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--marrom-canela);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Marcia Produtos Naturais</h1>
+            <p>Ingredientes naturais e artesanais para sua cozinha</p>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Produtos</h2>
+                <p>Selecionamos os melhores ingredientes naturais para você. Clique no produto desejado para fazer seu pedido via WhatsApp!</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Milho Pipoca -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="product-name">Milho Pipoca</h3>
+                    <p class="product-price">R$ 7,00</p>
+                    <button class="product-button" onclick="orderProduct('Milho Pipoca', '7,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Grão de Bico -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="product-name">Grão de Bico</h3>
+                    <p class="product-price">R$ 10,00</p>
+                    <button class="product-button" onclick="orderProduct('Grão de Bico', '10,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Tapioca -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                    <h3 class="product-name">Tapioca</h3>
+                    <p class="product-price">R$ 16,00</p>
+                    <button class="product-button" onclick="orderProduct('Tapioca', '16,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Granola -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-wheat-awn"></i>
+                    </div>
+                    <h3 class="product-name">Granola</h3>
+                    <p class="product-price">R$ 25,00</p>
+                    <button class="product-button" onclick="orderProduct('Granola', '25,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Canjica Branca -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="product-name">Canjica Branca</h3>
+                    <p class="product-price">R$ 7,00</p>
+                    <button class="product-button" onclick="orderProduct('Canjica Branca', '7,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Proteína de Soja -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="product-name">Proteína de Soja</h3>
+                    <p class="product-price">R$ 10,00</p>
+                    <button class="product-button" onclick="orderProduct('Proteína de Soja', '10,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Pote de Aveia -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-wheat-awn"></i>
+                    </div>
+                    <h3 class="product-name">Pacote de Aveia</h3>
+                    <p class="product-price">R$ 10,00</p>
+                    <button class="product-button" onclick="orderProduct('Pote de Aveia', '10,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Chás Grandes -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <h3 class="product-name">Chás Grandes</h3>
+                    <p class="product-price">R$ 20,00</p>
+                    <button class="product-button" onclick="orderProduct('Chás Grandes', '20,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Leite de Coco -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-coconut"></i>
+                    </div>
+                    <h3 class="product-name">Leite de Coco</h3>
+                    <p class="product-price">R$ 7,00</p>
+                    <button class="product-button" onclick="orderProduct('Leite de Coco', '7,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Mel -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-honey-pot"></i>
+                    </div>
+                    <h3 class="product-name">Mel</h3>
+                    <p class="product-price">R$ 20,00</p>
+                    <button class="product-button" onclick="orderProduct('Mel', '20,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Sal Rosa -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-salt-shaker"></i>
+                    </div>
+                    <h3 class="product-name">Sal Rosa</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Sal Rosa', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Chá Pequeno -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <h3 class="product-name">Chá Pequeno</h3>
+                    <p class="product-price">R$ 10,00</p>
+                    <button class="product-button" onclick="orderProduct('Chá Pequeno', '10,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Louro Pacotinho -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="product-name">Louro Pacotinho</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Louro Pacotinho', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Alho Puro -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="product-name">Pacotes de Alho Puro</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Pacotes de Alho Puro', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Colorau -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <h3 class="product-name">Colorau</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Colorau', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Pimenta do Reino -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <h3 class="product-name">Pimenta do Reino</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Pimenta do Reino', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Açafrão -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="product-name">Açafrão</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Açafrão', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Chimichurri -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="product-name">Chimichurri</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Chimichurri', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Edu Guedes -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="product-name">Edu Guedes</h3>
+                    <p class="product-price">R$ 6,00</p>
+                    <button class="product-button" onclick="orderProduct('Edu Guedes', '6,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Temperos Baianos -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <h3 class="product-name">Temperos Baianos</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Temperos Baianos', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Linhaça Marrom -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="product-name">Linhaça Marrom</h3>
+                    <p class="product-price">R$ 7,00</p>
+                    <button class="product-button" onclick="orderProduct('Linhaça Marrom', '7,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Chocolate em Pó 50% -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    <h3 class="product-name">Chocolate em Pó 50%</h3>
+                    <p class="product-price">R$ 8,00</p>
+                    <button class="product-button" onclick="orderProduct('Chocolate em Pó 50%', '8,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Pacotes de Cravo -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="product-name">Pacotes de Cravo</h3>
+                    <p class="product-price">R$ 5,00</p>
+                    <button class="product-button" onclick="orderProduct('Pacotes de Cravo', '5,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+
+                <!-- Canela em Pau -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3 class="product-name">Canela em Pau</h3>
+                    <p class="product-price">R$ 6,00</p>
+                    <button class="product-button" onclick="orderProduct('Canela em Pau', '6,00')">
+                        <i class="fab fa-whatsapp"></i>
+                        Pedir no WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Float Button -->
+    <a href="#" class="whatsapp-float" onclick="openWhatsApp()">
+        <i class="fab fa-whatsapp"></i>
+        Fale Conosco
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Gustavo Gonsalves</p>
+        </div>
+    </footer>
+
+    <script>
+        function orderProduct(productName, price) {
+            const message = `Olá! Gostaria de fazer um pedido:\n\n🌿 *${productName}*\n💰 Preço: R$ ${price}\n\nPoderia me informar sobre disponibilidade e forma de entrega?`;
+            const whatsappUrl = `https://wa.me/5512997161110?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function openWhatsApp() {
+            const message = `Olá! Gostaria de conhecer mais sobre os produtos da Marcia Produtos Naturais. Poderia me ajudar?`;
+            const whatsappUrl = `https://wa.me/5512997161110?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
