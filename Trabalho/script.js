@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const backToTopBtn = document.getElementById('backToTop');
     
     window.addEventListener('scroll', function() {
-        // Show/hide back to top button
         if (window.pageYOffset > 300) {
             backToTopBtn.classList.add('visible');
         } else {
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                const headerOffset = 80; // Height of fixed header
+                const headerOffset = 80;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -63,22 +62,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form submission handling
+    // Form submission handling (Google Apps Script integration)
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form data
+
             const formData = new FormData(this);
-            const formValues = Object.fromEntries(formData.entries());
-            
-            // Here you would typically send the form data to a server
-            console.log('Form submitted:', formValues);
-            
-            // Show success message
-            alert('Obrigado pela sua mensagem! Entrarei em contato em breve.');
-            this.reset();
+
+            fetch("1k251JM727", { // <-- Substitua pela URL gerada no Google Apps Script
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(msg => {
+                alert("Mensagem enviada com sucesso! ✅");
+                this.reset();
+            })
+            .catch(err => {
+                alert("Erro ao enviar. ❌ Tente novamente.");
+                console.error(err);
+            });
         });
     }
 
@@ -97,17 +101,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // Set initial state for animated elements
     document.querySelectorAll('.service-card, .value, .contact-method').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
     });
 
-    // Run once on load
     animateOnScroll();
-    
-    // Run on scroll
     window.addEventListener('scroll', animateOnScroll);
 
     // Handle responsive navigation on window resize
@@ -119,9 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Add resize event listener
     window.addEventListener('resize', handleResize);
-    
-    // Initialize
     handleResize();
 });
