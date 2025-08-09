@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const formData = new FormData(this);
 
-            fetch("1BMEyea56lrQ4Am6klFUZ0KQBFao7LuMTp0wWcunC1zuYRH63nF3pfklM", { // <-- Substitua pela URL gerada no Google Apps Script
+            fetch("1u1KplUMb4sCdemkx0VPVFXpQxMLFi7smYgBB6UBPIW6b5i3J8LCWofuG", { // <-- Substitua pela URL gerada no Google Apps Script
                 method: "POST",
                 body: formData
             })
