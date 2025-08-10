@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 mensagem: this.querySelector('[name="mensagem"]').value
             };
 
-            fetch("https://script.google.com/macros/s/AKfycbzvyxc8ihOyZmZvk8rfW74d0B02nyhZG2CPVxsEc67Y6080hH0pTlTrZavR7O7jjmdZ/exec", { 
+            fetch("https://script.google.com/macros/s/AKfycbzsbU09GVV_BOwM87TxpdS1Zj0tqlwuxk2daE4sz4LAv-nbLaOE5iDASrVOqPOGq8Ra/exec", { 
                 method: "POST",
                 body: JSON.stringify(dados),
                 headers: {
