@@ -68,19 +68,32 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const formData = new FormData(this);
+            // Captura os campos do formulário
+            const dados = {
+                nome: this.querySelector('[name="nome"]').value,
+                email: this.querySelector('[name="email"]').value,
+                servico: this.querySelector('[name="servico"]').value,
+                mensagem: this.querySelector('[name="mensagem"]').value
+            };
 
-            fetch("https://script.google.com/macros/s/AKfycbyY7bVczvPBs3M6ad4hBntKB2GLvgMNrUumAy1rgm3DcqXeafiOscDfgBl-1qkVlO_5/exec", { // <-- Substitua pela URL gerada no Google Apps Script
+            fetch("https://script.google.com/macros/s/AKfycbyY7bVczvPBs3M6ad4hBntKB2GLvgMNrUumAy1rgm3DcqXeafiOscDfgBl-1qkVlO_5/exec", { 
                 method: "POST",
-                body: formData
+                body: JSON.stringify(dados),
+                headers: {
+                    "Content-Type": "application/json"
+                }
             })
-            .then(response => response.text())
-            .then(msg => {
-                alert("Mensagem enviada com sucesso! ✅");
-                this.reset();
+            .then(response => response.json())
+            .then(resposta => {
+                if (resposta.status === 'sucesso') {
+                    alert("Mensagem enviada com sucesso! ✅");
+                    this.reset();
+                } else {
+                    alert("Ocorreu um erro ao enviar. ❌");
+                }
             })
             .catch(err => {
-                alert("Erro ao enviar. ❌ Tente novamente.");
+                alert("Erro na conexão com o servidor. ❌");
                 console.error(err);
             });
         });
