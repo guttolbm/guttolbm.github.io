@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /Favicon/
+Disallow: /Imagens/
+
+# Sitemap location
+Sitemap: https://guttolbm.github.io/sitemap.xml
+
+# Crawl-delay: 10  # Uncomment if needed to limit crawl rate
+
+# Example of disallowing specific paths:
+# Disallow: /private/
+# Disallow: /temp/

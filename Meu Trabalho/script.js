@@ -1,6 +1,6 @@
 // ========= CONFIG =========
 // Cole aqui a URL do seu Apps Script publicado como Web App (Google Sheets)
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/SEU_ID/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
 
 // Configurações
 const CONFIG = {
@@ -49,7 +49,7 @@ function initApp() {
   }
   
   // Verifica se o Google Script está configurado
-  if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('SEU_ID')) {
+  if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
     console.warn('URL do Google Script não configurada');
     showStatus('⚠ Configure a URL do Google Script', 'warning');
   }
@@ -199,10 +199,19 @@ async function handleFormSubmit(e) {
     
     // Mostra estado de carregamento
     updateButtonState(true);
-    showStatus('Enviando...', 'info');
+    showStatus('Enviando sua mensagem...', 'info');
+    
+    // Converte FormData para objeto simples
+    const formDataObj = {};
+    formData.forEach((value, key) => {
+      formDataObj[key] = value;
+    });
+    
+    // Adiciona timestamp
+    formDataObj.timestamp = new Date().toISOString();
     
     // Envia o formulário
-    await submitForm(formData);
+    await submitForm(formDataObj);
     
   } catch (error) {
     console.error('Erro ao enviar o formulário:', error);
@@ -212,6 +221,48 @@ async function handleFormSubmit(e) {
     // Restaura o estado
     STATE.isSubmitting = false;
     updateButtonState(false);
+  }
+}
+
+// Envia o formulário para o Google Script
+async function submitForm(formData) {
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(formData).toString(),
+      mode: 'no-cors',
+    });
+    
+    // Como estamos usando 'no-cors', não podemos verificar o status da resposta
+    // Mas podemos verificar se a requisição foi feita
+    if (!response) {
+      throw new Error('Erro ao enviar o formulário');
+    }
+    
+    // Sucesso!
+    showStatus('✅ Mensagem enviada com sucesso! Entrarei em contato em breve.', 'success');
+    DOM.form.reset();
+    
+    // Rola para o topo do formulário
+    DOM.form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+  } catch (error) {
+    // Tenta novamente se ainda houver tentativas
+    if (STATE.retryCount < CONFIG.maxRetries) {
+      STATE.retryCount++;
+      console.log(`Tentativa ${STATE.retryCount} de ${CONFIG.maxRetries}...`);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return submitForm(STATE.formData);
+    }
+    
+    // Se esgotar as tentativas, lança o erro
+    throw error;
+  } finally {
+    // Reseta o contador de tentativas
+    STATE.retryCount = 0;
   }
 }
 
@@ -242,45 +293,6 @@ function updateButtonState(isLoading) {
     DOM.submitBtn.disabled = false;
     DOM.submitBtn.textContent = 'Enviar';
     DOM.submitBtn.removeAttribute('aria-busy');
-  }
-}
-
-// Envia o formulário para o Google Script
-async function submitForm(formData) {
-  try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors',
-    });
-    
-    // Como estamos usando 'no-cors', não podemos verificar o status da resposta
-    // Mas podemos verificar se a requisição foi feita
-    if (!response) {
-      throw new Error('Erro ao enviar o formulário');
-    }
-    
-    // Sucesso!
-    showStatus('✅ Mensagem enviada com sucesso!', 'success');
-    DOM.form.reset();
-    
-    // Rola para o topo do formulário
-    DOM.form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    
-  } catch (error) {
-    // Tenta novamente se ainda houver tentativas
-    if (STATE.retryCount < CONFIG.maxRetries) {
-      STATE.retryCount++;
-      console.log(`Tentativa ${STATE.retryCount} de ${CONFIG.maxRetries}...`);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return submitForm(STATE.formData);
-    }
-    
-    // Se esgotar as tentativas, lança o erro
-    throw error;
-  } finally {
-    // Reseta o contador de tentativas
-    STATE.retryCount = 0;
   }
 }
 
